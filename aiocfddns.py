@@ -59,14 +59,14 @@ async def get_cloudflare_dns_record_id(cloudflare_client, zone_id, domain):
     return records.result[0].id
 
 async def create_cloudflare_dns_record(cloudflare_client, zone_id, domain, content):
-    await cloudflare_client.dns.records.create(zone_id=zone_id, name=domain, content=content, type='A')
+    await cloudflare_client.dns.records.create(zone_id=zone_id, name=domain, content=content, type='A', ttl=60)
 
 async def get_cloudflare_dns_record_content(cloudflare_client, zone_id, dns_record_id):
     record = await cloudflare_client.dns.records.get(zone_id=zone_id, dns_record_id=dns_record_id)
     return record.content
 
 async def update_cloudflare_dns_record_content(cloudflare_client, zone_id, dns_record_id, domain, content):
-    await cloudflare_client.dns.records.update(zone_id=zone_id, dns_record_id=dns_record_id, name=domain, content=content, type='A')
+    await cloudflare_client.dns.records.update(zone_id=zone_id, dns_record_id=dns_record_id, name=domain, content=content, type='A', ttl=60)
 
 async def main(args):
     if args.cloudflare_api_token is None:
